@@ -1,8 +1,5 @@
 package com.example.UserService.service;
 
-import java.util.List;
-import java.util.logging.Logger;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +8,7 @@ import com.example.UserService.repository.UserRepositoryInterface;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.slf4j.LoggerFactory;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -31,13 +28,14 @@ public class UserServiceImpl implements User_Service {
    }
 
    @Override
-   public List<User> getAllUsers() {
+   public Optional<User> getAllUsers(Long id ) {
       log.info("Getting all users");
-      try {
-         userRepositoryInterface.findAll();
-      } catch (Exception e) {
-         log.error("Error getting all users: {}", e.getMessage());
+      if(userRepositoryInterface.findById(id).isPresent()){
+         Optional<User> user = userRepositoryInterface.findById(id);
+         log.info(user.toString());
+         return user;
       }
-      return userRepositoryInterface.findAll();
+      return Optional.of(new User());
+     // return new User();
    }
 }
