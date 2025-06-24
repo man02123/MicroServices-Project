@@ -12,6 +12,6 @@ import com.example.UserService.entity.User;
 public interface User_Service {
    public User saveUser(User user);
 
-   public Optional<User> getAllUsers(Long Id);
+   public User getAllUsers(Long Id);
 
 }

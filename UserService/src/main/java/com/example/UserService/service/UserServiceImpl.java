@@ -1,5 +1,6 @@
 package com.example.UserService.service;
 
+import com.example.UserService.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,14 +29,9 @@ public class UserServiceImpl implements User_Service {
    }
 
    @Override
-   public Optional<User> getAllUsers(Long id ) {
-      log.info("Getting all users");
-      if(userRepositoryInterface.findById(id).isPresent()){
-         Optional<User> user = userRepositoryInterface.findById(id);
-         log.info(user.toString());
-         return user;
-      }
-      return Optional.of(new User());
-     // return new User();
+   public User getAllUsers(Long id) {
+      return
+              userRepositoryInterface.findById(id).orElseThrow(() -> new ResourceNotFoundException("not found", "404"));
+      // return new User();
    }
 }
